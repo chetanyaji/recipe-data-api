@@ -12,9 +12,19 @@ public class ErrorDetails {
 	private String details;
 	private String timeStamp;
 
+	/**
+	 * Default constructor
+	 */
 	public ErrorDetails() {
 	}
 
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param message
+	 * @param details
+	 * @param timeStamp
+	 */
 	public ErrorDetails(String message, String details, String timeStamp) {
 		super();
 		this.message = message;
@@ -22,26 +32,44 @@ public class ErrorDetails {
 		this.timeStamp = timeStamp;
 	}
 
+	/**
+	 * @return the message
+	 */
 	public String getMessage() {
 		return message;
 	}
 
+	/**
+	 * @param message the message to set
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
+	/**
+	 * @return the details
+	 */
 	public String getDetails() {
 		return details;
 	}
 
+	/**
+	 * @param details the details to set
+	 */
 	public void setDetails(String details) {
 		this.details = details;
 	}
 
+	/**
+	 * @return the timeStamp
+	 */
 	public String getTimeStamp() {
 		return timeStamp;
 	}
 
+	/**
+	 * @param timeStamp the timeStamp to set
+	 */
 	public void setTimeStamp(String timeStamp) {
 		this.timeStamp = timeStamp;
 	}

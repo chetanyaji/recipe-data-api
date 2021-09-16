@@ -13,6 +13,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * This Entity class is containing ingredient related data members.
+ * 
+ * @author chetasin
+ */
 @Entity
 @Table(name = "ingredient")
 public class Ingredient implements Serializable {
@@ -34,9 +39,18 @@ public class Ingredient implements Serializable {
 	@Column(name = "name")
 	private String name;
 
+	/**
+	 * Default constructor
+	 */
 	public Ingredient() {
 	}
 
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param id
+	 * @param name
+	 */
 	public Ingredient(Long id,
 			@NotNull @NotBlank @Size(min = 4, message = "Ingredient name should not be less than 4 characters") String name) {
 		super();
@@ -44,18 +58,30 @@ public class Ingredient implements Serializable {
 		this.name = name;
 	}
 
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}

@@ -1,13 +1,27 @@
 package com.capgemini.recipedataapi.dto;
 
+/**
+ * This DTO class is containing ingredient related data members.
+ * 
+ * @author chetasin
+ */
 public class IngredientDTO {
 
 	private Long id;
 	private String name;
-	
+
+	/**
+	 * Default constructor
+	 */
 	public IngredientDTO() {
 	}
-	
+
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param id
+	 * @param name
+	 */
 	public IngredientDTO(Long id, String name) {
 		super();
 		this.id = id;

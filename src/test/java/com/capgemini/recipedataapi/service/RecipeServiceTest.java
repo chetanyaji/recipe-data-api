@@ -1,7 +1,6 @@
 package com.capgemini.recipedataapi.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.capgemini.recipedataapi.dto.IngredientDTO;
 import com.capgemini.recipedataapi.dto.RecipeDTO;
-import com.capgemini.recipedataapi.exception.ResourceNotFoundException;
 import com.capgemini.recipedataapi.model.Ingredient;
 import com.capgemini.recipedataapi.model.Recipe;
 import com.capgemini.recipedataapi.repository.RecipeRepository;

@@ -16,9 +16,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.capgemini.recipedataapi.dto.AuthenticationRequest;
+import com.capgemini.recipedataapi.dto.AuthenticationResponse;
 import com.capgemini.recipedataapi.dto.MyUserDetailsDTO;
-import com.capgemini.recipedataapi.model.AuthenticationRequest;
-import com.capgemini.recipedataapi.model.AuthenticationResponse;
 import com.capgemini.recipedataapi.model.User;
 import com.capgemini.recipedataapi.util.JwtUtil;
 

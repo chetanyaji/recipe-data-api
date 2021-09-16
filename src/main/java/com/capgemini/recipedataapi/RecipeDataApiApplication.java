@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
+ * This is class containing main method for recipe-data-api application.
  * 
  * @author chetasin
  *

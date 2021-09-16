@@ -8,6 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * This Entity class containing user_details related data members.
+ * 
+ * @author chetasin
+ */
 @Entity
 @Table(name = "user_details")
 public class User {
@@ -26,9 +31,21 @@ public class User {
 	@Column(name = "roles")
 	private String roles;
 
+	/**
+	 * Default constructor
+	 */
 	public User() {
 	}
 
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param id
+	 * @param userName
+	 * @param password
+	 * @param isActive
+	 * @param roles
+	 */
 	public User(Long id, String userName, String password, Boolean isActive, String roles) {
 		super();
 		this.id = id;
@@ -38,42 +55,72 @@ public class User {
 		this.roles = roles;
 	}
 
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the userName
+	 */
 	public String getUserName() {
 		return userName;
 	}
 
+	/**
+	 * @param userName the userName to set
+	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
+	/**
+	 * @return the password
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * @param password the password to set
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * @return the isActive
+	 */
 	public Boolean getIsActive() {
 		return isActive;
 	}
 
+	/**
+	 * @param isActive the isActive to set
+	 */
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
 
+	/**
+	 * @return the roles
+	 */
 	public String getRoles() {
 		return roles;
 	}
 
+	/**
+	 * @param roles the roles to set
+	 */
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}

@@ -1,5 +1,7 @@
 package com.capgemini.recipedataapi.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,13 +16,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.capgemini.recipedataapi.filter.JwtRequestFilter;
+
 /**
+ * This class containing Security configuration related method.
  * 
  * @author chetasin
  *
  */
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
+	
+	private static final Logger logger = LogManager.getLogger(SecurityConfigurer.class);
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -30,22 +36,27 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		logger.debug("Invoke configure() with AuthenticationManagerBuilder method.");
 		auth.userDetailsService(userDetailsService);
+		logger.debug("Exit from configure() method.");
 	}
 
 	/**
-	 * 
+	 * This configure method is used to bypass URL h2 database and authenticate. 
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		logger.debug("Invoke configure() with HttpSecurity method.");
 		http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/h2-console/**").permitAll()
 				.antMatchers("/authenticate").permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		logger.debug("Exit from configure() method.");
 	}
 	
 	/**
-	 * 
+	 * This method is used to generate AuthenticationManager.
+	 * @return AuthenticationManager
 	 */
 	@Override
 	@Bean
@@ -54,8 +65,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * This method is for PasswordEncoder.
+	 * @return PasswordEncoder
 	 */
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {

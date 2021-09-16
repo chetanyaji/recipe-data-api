@@ -20,9 +20,14 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * This Entity class containing Recipe related data members.
+ * 
+ * @author chetasin
+ */
 @Entity
 @Table(name = "recipe")
-public class Recipe implements Serializable{
+public class Recipe implements Serializable {
 
 	/**
 	 * This is serial version UID for serialized class
@@ -51,8 +56,8 @@ public class Recipe implements Serializable{
 	@Column(name = "is_vegetarian")
 	private Boolean isVegetarian;
 
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="recipe_id", nullable=false)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "recipe_id", nullable = false)
 	private List<Ingredient> ingredientList;
 
 	@NotNull
@@ -60,9 +65,23 @@ public class Recipe implements Serializable{
 	@Column(name = "cooking_instructions")
 	private String cookingInstructions;
 
+	/**
+	 * Default constructor
+	 */
 	public Recipe() {
 	}
 
+	/**
+	 * Parameterized constructor
+	 * 
+	 * @param id
+	 * @param name
+	 * @param numberOfPeople
+	 * @param creationDateTime
+	 * @param isVegetarian
+	 * @param ingredientList
+	 * @param cookingInstructions
+	 */
 	public Recipe(Long id,
 			@NotNull @NotBlank @Size(min = 5, max = 50, message = "Recipe name should not be less than 5 and more than 50 character.") String name,
 			@Min(value = 1, message = "Number of people should be minimum 1 person") Integer numberOfPeople,
@@ -78,58 +97,100 @@ public class Recipe implements Serializable{
 		this.cookingInstructions = cookingInstructions;
 	}
 
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return the numberOfPeople
+	 */
 	public Integer getNumberOfPeople() {
 		return numberOfPeople;
 	}
 
+	/**
+	 * @param numberOfPeople the numberOfPeople to set
+	 */
 	public void setNumberOfPeople(Integer numberOfPeople) {
 		this.numberOfPeople = numberOfPeople;
 	}
 
+	/**
+	 * @return the creationDateTime
+	 */
 	public String getCreationDateTime() {
 		return creationDateTime;
 	}
 
+	/**
+	 * @param creationDateTime the creationDateTime to set
+	 */
 	public void setCreationDateTime(String creationDateTime) {
 		this.creationDateTime = creationDateTime;
 	}
 
+	/**
+	 * @return the isVegetarian
+	 */
 	public Boolean getIsVegetarian() {
 		return isVegetarian;
 	}
 
+	/**
+	 * @param isVegetarian the isVegetarian to set
+	 */
 	public void setIsVegetarian(Boolean isVegetarian) {
 		this.isVegetarian = isVegetarian;
 	}
 
+	/**
+	 * @return the ingredientList
+	 */
 	public List<Ingredient> getIngredientList() {
 		return ingredientList;
 	}
 
+	/**
+	 * @param ingredientList the ingredientList to set
+	 */
 	public void setIngredientList(List<Ingredient> ingredientList) {
 		this.ingredientList = ingredientList;
 	}
 
+	/**
+	 * @return the cookingInstructions
+	 */
 	public String getCookingInstructions() {
 		return cookingInstructions;
 	}
 
+	/**
+	 * @param cookingInstructions the cookingInstructions to set
+	 */
 	public void setCookingInstructions(String cookingInstructions) {
 		this.cookingInstructions = cookingInstructions;
 	}

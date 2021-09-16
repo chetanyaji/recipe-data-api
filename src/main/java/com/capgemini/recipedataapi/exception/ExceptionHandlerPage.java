@@ -1,5 +1,7 @@
 package com.capgemini.recipedataapi.exception;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,6 +21,8 @@ import com.capgemini.recipedataapi.util.DateTimeLocal;
 @ControllerAdvice
 public class ExceptionHandlerPage {
 
+	private static final Logger logger = LogManager.getLogger(ExceptionHandlerPage.class);
+
 	/**
 	 * Returns Custom Exception Details Along with the status when a record is not
 	 * found
@@ -27,11 +31,12 @@ public class ExceptionHandlerPage {
 	 * @param request   - request url details
 	 * @return - custom exception details along with status NOT_FOUND
 	 */
-	@SuppressWarnings("unchecked")
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> toHandleResourceNotFound(ResourceNotFoundException exception, WebRequest request) {
+		logger.debug("Invoke toHandleResourceNotFound() method with ResourceNotFoundException:{} ", () -> exception);
 		ErrorDetails error = new ErrorDetails(exception.getMessage(), request.getDescription(false),
 				DateTimeLocal.getLocalDateTime());
+		logger.debug("Exit from toHandleResourceNotFound() method with ErrorDetails:{}", () -> error);
 		return new ResponseEntity<ErrorDetails>(error, HttpStatus.NOT_FOUND);
 	}
 
@@ -45,9 +50,10 @@ public class ExceptionHandlerPage {
 	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> toHandleAll(Exception exception, WebRequest request) {
+		logger.debug("Invoke toHandleAll() method with ResourceNotFoundException:{} ", () -> exception);
 		ErrorDetails error = new ErrorDetails(exception.getMessage(), request.getDescription(false),
 				DateTimeLocal.getLocalDateTime());
-
+		logger.debug("Exit from toHandleAll() method with ErrorDetails:{}", () -> error);
 		return new ResponseEntity<ErrorDetails>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
@@ -59,11 +65,13 @@ public class ExceptionHandlerPage {
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<?> toHandleAllCustomValidations(MethodArgumentNotValidException exception) {
+		logger.debug("Invoke toHandleAllCustomValidations() method with MethodArgumentNotValidException:{} ",
+				() -> exception);
 		ErrorDetails error = new ErrorDetails("Its a validation error",
 				exception.getBindingResult().getFieldError().getField() + "--"
 						+ exception.getBindingResult().getFieldError().getDefaultMessage(),
 				DateTimeLocal.getLocalDateTime());
-
+		logger.debug("Exit from toHandleAllCustomValidations() method with ErrorDetails:{}", () -> error);
 		return new ResponseEntity<ErrorDetails>(error, HttpStatus.BAD_REQUEST);
 	}
 
