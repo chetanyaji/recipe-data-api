@@ -1,10 +1,8 @@
 # recipe-data-api
-This Project is for Recipe management
-Recipe Data API
+This Project recipe-data-api is for recipe management and its ingredient
 
 It is a spring boot application, in which CRUD operations will be done using Rest Api's for Recipes.
 
-Here are the sample screenshots are placing to access the data.
 
 •For getting all the recipe details from the table.
 
