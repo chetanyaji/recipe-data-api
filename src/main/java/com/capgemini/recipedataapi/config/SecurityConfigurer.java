@@ -25,7 +25,7 @@ import com.capgemini.recipedataapi.filter.JwtRequestFilter;
  */
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
-	
+
 	private static final Logger logger = LogManager.getLogger(SecurityConfigurer.class);
 
 	@Autowired
@@ -33,6 +33,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
+
+	private static final String[] PUBLIC_URLS = { "/v2/api-docs", "/swagger-resources/**", "/webjars/**",
+			"/h2-console/**", "/authenticate", "/", "/swagger-ui.html" };
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,20 +45,20 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * This configure method is used to bypass URL h2 database and authenticate. 
+	 * This configure method is used to bypass URL h2 database and authenticate.
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		logger.debug("Invoke configure() with HttpSecurity method.");
-		http.csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/h2-console/**").permitAll()
-				.antMatchers("/authenticate").permitAll().anyRequest().authenticated().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.csrf().disable().authorizeRequests().antMatchers(PUBLIC_URLS).permitAll().anyRequest().authenticated()
+				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		logger.debug("Exit from configure() method.");
 	}
-	
+
 	/**
 	 * This method is used to generate AuthenticationManager.
+	 * 
 	 * @return AuthenticationManager
 	 */
 	@Override
@@ -66,6 +69,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	/**
 	 * This method is for PasswordEncoder.
+	 * 
 	 * @return PasswordEncoder
 	 */
 	@Bean

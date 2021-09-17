@@ -1,13 +1,27 @@
 package com.capgemini.recipedataapi.config;
 
+import static com.capgemini.recipedataapi.util.Constants.API_DESCRIPTION;
+import static com.capgemini.recipedataapi.util.Constants.API_NAME;
+import static com.capgemini.recipedataapi.util.Constants.API_TITLE;
+import static com.capgemini.recipedataapi.util.Constants.API_VERSION;
+import static com.capgemini.recipedataapi.util.Constants.AUTHORIZATION_DESCRIPTION;
+import static com.capgemini.recipedataapi.util.Constants.AUTHORIZATION_HEADER;
+import static com.capgemini.recipedataapi.util.Constants.AUTHORIZATION_SCOPE;
+import static com.capgemini.recipedataapi.util.Constants.CONTACT_EMAIL;
+import static com.capgemini.recipedataapi.util.Constants.CONTACT_NAME;
+import static com.capgemini.recipedataapi.util.Constants.CONTACT_URL;
+import static com.capgemini.recipedataapi.util.Constants.LICENSE;
+import static com.capgemini.recipedataapi.util.Constants.LICENSE_URL;
+import static com.capgemini.recipedataapi.util.Constants.TERM_OF_SERVICE;
+
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import springfox.documentation.builders.ApiInfoBuilder;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -25,56 +39,38 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfigurer {
 
 	/**
-	 * This bean is used for ModelMapper bean definition.
-	 * 
-	 * @return ModelMapper class object
-	 */
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-
-	/**
 	 * This bean is used for generation of Swagger documentation for each end point.
 	 * 
 	 * @return Docket class object
 	 */
-//	@Bean
-//	public Docket api() {
-//		return new Docket(DocumentationType.SWAGGER_2).select()
-//				.apis(RequestHandlerSelectors.basePackage("com.capgemini.recipedataapi.controller"))
-//				.paths(PathSelectors.any()).build();
-//	}
-
-	public static final String AUTHORIZATION_HEADER = "Authorization";
-
-	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("My API title").description("")
-				.termsOfServiceUrl("https://www.example.com/api")
-				.contact(new Contact("Hasson", "http://www.example.com", "hasson@example.com")).license("Open Source")
-				.licenseUrl("https://www.example.com").version("1.0.0").build();
-	}
-
 	@Bean
-	public Docket api() {
+	public Docket apiDocket() {
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
 				.securityContexts(Arrays.asList(securityContext())).securitySchemes(Arrays.asList(apiKey())).select()
-				.apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
+				.apis(RequestHandlerSelectors.basePackage("com.capgemini.recipedataapi.controller")).paths(PathSelectors.any()).build();
+	}
+
+	private ApiInfo apiInfo() {
+		return new ApiInfo(API_TITLE, API_DESCRIPTION, API_VERSION, TERM_OF_SERVICE, contact(), LICENSE, LICENSE_URL,
+				Collections.emptyList());
+	}
+
+	private Contact contact() {
+		return new Contact(CONTACT_NAME, CONTACT_URL, CONTACT_EMAIL);
 	}
 
 	private ApiKey apiKey() {
-		return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+		return new ApiKey(API_NAME, AUTHORIZATION_HEADER, SecuritySchemeIn.HEADER.name());
 	}
 
 	private SecurityContext securityContext() {
-		return SecurityContext.builder().securityReferences(defaultAuth()).build();
+		return SecurityContext.builder().securityReferences(securityReference()).build();
 	}
 
-	List<SecurityReference> defaultAuth() {
-		AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-		authorizationScopes[0] = authorizationScope;
-		return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
+	List<SecurityReference> securityReference() {
+		AuthorizationScope[] authorizationScope = {
+				new AuthorizationScope(AUTHORIZATION_SCOPE, AUTHORIZATION_DESCRIPTION) };
+		return Arrays.asList(new SecurityReference(API_NAME, authorizationScope));
 	}
 
 }
